@@ -66,8 +66,13 @@ This implies that a secondary body will have an apses:
 * Apogee further to primary
 * perigee closest to primary
 
-The difference between the apses depends on the ![eccentricity](./elliptical_eccentricity.md), e.
+The difference between the apses depends on the ![eccentricity](./orbital_eccentricity.md), e.
 
 In some case a barycenter can vary between inside and outside the primary body, this occurs where 
 
 ![hybrid_barycenter](./images/hybrid_barycenter.png)
+
+
+___
+
+[source](https://en.wikipedia.org/wiki/Barycenter_(astronomy))
