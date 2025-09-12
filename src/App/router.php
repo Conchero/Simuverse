@@ -1,7 +1,5 @@
-
 <?php
 
-$path = $_SERVER['REQUEST_URI'];
 
 $cleanPath = preg_replace('/\?.*/', '', $path);
 
