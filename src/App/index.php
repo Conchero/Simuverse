@@ -18,8 +18,6 @@ for ($i = 0; $i <= $nbUnitPerAxis; $i++) {
 }
 
 $path = $_SERVER['REQUEST_URI'];
-
-
  #Charge le router
  require_once './router.php';
 
