@@ -3,7 +3,8 @@
 
 $cleanPath = preg_replace('/\?.*/', '', $path);
 
-print_r($cleanPath);
+print_r($path);
+
 switch ($cleanPath) {
     case '/':
         include './templates/home.php';

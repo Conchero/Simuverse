@@ -41,6 +41,7 @@ RUN --mount=type=bind,source=composer.json,target=composer.json \
 # php@sha256:99cede493dfd88720b610eb8077c8688d3cca50003d76d1d539b0efc8cca72b4.
 FROM php:8.4.6-apache as final
 
+RUN a2enmod rewrite
 
 RUN apt-get update
 
@@ -85,6 +86,9 @@ COPY ./docker-php-ext-pdo_pgsql.ini "$PHP_INI_DIR/conf.d/"
 COPY --from=deps app/vendor/ /var/www/html/vendor
 # Copy the app files from the app directory.
 COPY ./src/App /var/www/html
+
+COPY ./apache/apache2.conf /etc/apache2/apache2.conf
+COPY ./apache/sites-enabled/000-default.conf /etc/apache2/sites-enabled/000-default.conf
 
 # Switch to a non-privileged user (defined in the base image) that the app will run under.
 # See https://docs.docker.com/go/dockerfile-user-best-practices/

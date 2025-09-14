@@ -13,6 +13,7 @@ services:
       context: .
     ports:
       - 9000:80
+
     
   db:
     image: postgres
