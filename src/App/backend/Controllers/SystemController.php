@@ -7,17 +7,24 @@ require_once('vendor/autoload.php');
 function GetSystem(int $id=-1){
     try{
 
-     $conn = new PDO('pgsql:host=localhost;port=5432, dbname=db-1') ;
+
+    $dsn = 'pgsql:dbname=universe;host=db;port=5432';
+    $user = 'postgres';
+    $password = 'simuversepassword';
+     $dbh = new PDO($dsn, $user,$password);
      $sql = 'SELECT * FROM star_system ';
-     $result = $conn->prepare($sql);
+     $result = $dbh->prepare($sql);
      $result->execute();
+ 
+ 
+     while ($row = $result->fetch(PDO::FETCH_ASSOC)){
+         echo 'row data' . $row['name'];
+     }
+
     } catch (PDOException $e) {
          echo $e ;
     }
 
-    while ($row = $result->fetch(PDO::FETCH_ASSOC)){
-        echo 'row data' . $row['name'];
-    }
 } 
 
 GetSystem();
