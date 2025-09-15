@@ -1,6 +1,8 @@
 <?php
 require_once($_SERVER["DOCUMENT_ROOT"] . "/backend/Controllers/BaseController.php");
 require_once($_SERVER["DOCUMENT_ROOT"] . "/backend/Entities/Body.php");
+
+
 class BodyController extends BaseController
 {
 
@@ -27,6 +29,31 @@ class BodyController extends BaseController
             ]);
         }
         $tmpBody = null;
+    }
+
+
+    function DeleteBody(array $_id)
+    {
+        try {
+            $deleteIdForSQL = '';
+            for ($i = 0; $i < count($_id); $i++) {
+                $deleteIdForSQL .= ":id_{$i}";
+                if ($i < count($_id)-1)
+                    $deleteIdForSQL .= ",";
+            }
+            var_dump($_id);
+            echo $deleteIdForSQL;
+
+
+            $sql = "DELETE FROM body WHERE id IN ({$deleteIdForSQL})";
+            $result = $this->dbController->GetDBH()->prepare($sql);
+            for ($i = 0; $i < count($_id); $i++) {
+                $result->bindParam(":id_{$i}", $_id[$i]);
+            }
+            $result->execute();
+        } catch (PDOException $e) {
+            echo $e;
+        }
     }
 
     function __destruct()

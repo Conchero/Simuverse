@@ -48,8 +48,9 @@ class SystemController extends BaseController
 
                         $bodyController = new BodyController();
                         $sun = new Body("sun", "1.9885_pow_30_units_kg", "1.997_units_kmpers", "4.379_pow_6_units_km", "0_units_km", $system_id);
-
+                        $sun2 = new Body("sun2", "1.9885_pow_30_units_kg", "1.997_units_kmpers", "4.379_pow_6_units_km", "0_units_km", $system_id);
                         $bodyController->CreateBody($sun->GetName(), $sun->GetMass(), $sun->GetRotationSpeed(), $sun->GetRadius(), $sun->GetDistanceFromPrimaryBody(), $system_id);
+                        $bodyController->CreateBody($sun2->GetName(), $sun2->GetMass(), $sun2->GetRotationSpeed(), $sun2->GetRadius(), $sun2->GetDistanceFromPrimaryBody(), $system_id);
                     }
                 }
             } catch (PDOException $e) {
@@ -65,6 +66,22 @@ class SystemController extends BaseController
         if ($_POST) {
 
             try {
+
+                $sql = 'SELECT body.id,body.name FROM body JOIN star_system ON body.system_id = star_system.id';
+                $result = $this->dbController->GetDBH()->prepare($sql);
+                $result->execute();
+                $linkedBodyArray = $result->fetchAll();
+                $linkedBodyIdArray = array();
+
+                for ($i = 0; $i < count($linkedBodyArray); $i++) {
+                    array_push($linkedBodyIdArray, $linkedBodyArray[$i]["id"]);
+                }
+
+                if (count($linkedBodyIdArray) > 0) {
+                    $bodyController = new BodyController();
+                    $bodyController->DeleteBody($linkedBodyIdArray);
+                }
+
                 $sql = 'DELETE FROM star_system WHERE id=:id';
                 $result = $this->dbController->GetDBH()->prepare($sql);
                 $result->bindParam(':id', $_id, PDO::PARAM_INT);
