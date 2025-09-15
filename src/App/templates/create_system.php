@@ -8,9 +8,6 @@ if ($_POST) {
     $uri   = rtrim(dirname($_SERVER['PHP_SELF']), '/\\');
     $extra = 'system-collection';
     header("Location: http://$host$uri/$extra");
-    exit;
-
-    echo "created sucessfully";
 }
 ?>
 
@@ -33,3 +30,8 @@ if ($_POST) {
 </body>
 
 </html>
+
+
+<?php
+exit();
+?>

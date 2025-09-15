@@ -4,10 +4,10 @@ require_once('vendor/autoload.php');
 
 class DatabaseController
 {
-    protected string $dsn;
-    protected string $user;
-    protected string $password;
-    protected PDO $dbh;
+    protected ?string $dsn;
+    protected ?string $user;
+    protected ?string $password;
+    protected ?PDO $dbh;
     function __construct()
     {
         // $env = parse_ini_file($_SERVER["DOCUMENT_ROOT"] . '.env');
@@ -26,4 +26,15 @@ class DatabaseController
     {
         return $this->dbh;
     }
+
+    function __destruct()
+    {
+        $this->dsn = null;
+        $this->user = null;
+        $this->password = null;
+        $this->dbh = null;
+
+        echo 'Destroying Database Controller';
+    }
+
 }

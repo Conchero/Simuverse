@@ -17,8 +17,6 @@ if ($_POST) {
 $systemController = new SystemController();
 $allSystems = $systemController->GetSystem();
 
-
-
 ?>
 
 
@@ -50,3 +48,7 @@ $allSystems = $systemController->GetSystem();
 </body>
 
 </html>
+
+<?php
+exit();
+?>

@@ -5,8 +5,8 @@ require_once($_SERVER["DOCUMENT_ROOT"]."/backend/Controllers/DatabaseController.
 
 class SystemController
 {
+    protected ?DatabaseController $dbController;
 
-    protected $dbController;
     function __construct() {
         $this->dbController = new DatabaseController();
     }
@@ -30,13 +30,8 @@ class SystemController
         if ($_POST) {
 
             try {
-                $dsn = 'pgsql:dbname=universe;host=db;port=5432';
-                $user = 'postgres';
-                $password = 'simuversepassword';
-                $dbh = new PDO($dsn, $user, $password);
-
                 $sql = 'INSERT INTO star_system VALUES(DEFAULT, :name)';
-                $result = $dbh->prepare($sql);
+                $result = $this->dbController->GetDBH()->prepare($sql);
                 $result->bindParam(':name', $_POST['system_name']);
                 $result->execute();
 
@@ -52,20 +47,21 @@ class SystemController
         if ($_POST) {
 
             try {
-                $dsn = 'pgsql:dbname=universe;host=db;port=5432';
-                $user = 'postgres';
-                $password = 'simuversepassword';
-                $dbh = new PDO($dsn, $user, $password);
-
-                var_dump($_id);
                 $sql = 'DELETE FROM star_system WHERE id=:id';
-                $result = $dbh->prepare($sql);
+                $result = $this->dbController->GetDBH()->prepare($sql);
                 $result->bindParam(':id', $_id,PDO::PARAM_INT);
                 $result->execute();
             } catch (PDOException $e) {
                 echo $e;
             }
         }
+    }
+
+
+    function __destruct()
+    {
+        $this->dbController = null;
+        echo 'Destroying System Controller';
     }
 
 }
