@@ -1,8 +1,6 @@
 <?php
 
 require $_SERVER['DOCUMENT_ROOT'] . "/backend/Controllers/SystemController.php";
-$systemController = new SystemController();
-$allSystems = $systemController->GetSystem();
 
 if ($_POST) {
     
@@ -15,6 +13,11 @@ if ($_POST) {
         }
     }
 }
+
+$systemController = new SystemController();
+$allSystems = $systemController->GetSystem();
+
+
 
 ?>
 
@@ -36,7 +39,7 @@ if ($_POST) {
     <?php for ($i = 0; $i < count($allSystems); $i++): ?>
         <div>
             <h1><?= $allSystems[$i]["name"] ?></h1>
-            <form action="" method="post">
+            <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post">
                 <input name="system-id" type="hidden" value=<?= $allSystems[$i]['id'] ?>></input>
                 <input type="submit" name='delete' value="Delete System"></input>
             </form>

@@ -3,6 +3,14 @@ if ($_POST) {
     require $_SERVER['DOCUMENT_ROOT'] . "/backend/Controllers/SystemController.php";
     $systemController = new SystemController();
     $systemController->CreateSystem();
+
+    $host  = $_SERVER['HTTP_HOST'];
+    $uri   = rtrim(dirname($_SERVER['PHP_SELF']), '/\\');
+    $extra = 'system-collection';
+    header("Location: http://$host$uri/$extra");
+    exit;
+
+    echo "created sucessfully";
 }
 ?>
 
@@ -17,7 +25,7 @@ if ($_POST) {
 </head>
 
 <body>
-    <form action="" name="create_form" method="post">
+    <form action="<?php echo $_SERVER['PHP_SELF']; ?>" name="create_form" method="post">
         <label for="name">Star Sytem Name</label>
         <input type="text" name="system_name" id="name">
         <input type="submit" name="submit" id="submit" value="Create System">
