@@ -3,16 +3,18 @@
 
 $cleanPath = preg_replace('/\?.*/', '', $path);
 
-print_r($path);
 
 switch ($cleanPath) {
     case '/':
         include './templates/home.php';
         break;
+    case '/system-creation':
+        include './templates/create_system.php';
+        break;
     case '/system-collection':
-        include './backend/Controllers/SystemController.php';
+        include './templates/system_management.php';
         break;
     default:
-        echo 'Page introuvable - 404 ';
+        echo 'Page introuvable - 505 ';
         break;
 }
