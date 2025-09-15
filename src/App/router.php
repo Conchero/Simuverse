@@ -3,6 +3,7 @@
 
 $cleanPath = preg_replace('/\?.*/', '', $path);
 
+include './templates/header.php';
 
 switch ($cleanPath) {
     case '/':
