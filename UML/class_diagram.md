@@ -15,8 +15,9 @@ class body{
 - int id 
 - string name
 - decimal mass
-- decimal rotationSpeed
+- decimal rotation_speed
 - decimal radius
+- decimal distance_from_primary_object
 - f_key_star_system star_system_id
 }
 

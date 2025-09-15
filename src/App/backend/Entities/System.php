@@ -1,6 +1,7 @@
 <?php
+require_once($_SERVER["DOCUMENT_ROOT"] . "/backend/Entities/BaseEntity");
 
-class System
+class System extends BaseEntity
 {
     private int $id;
     private string $name;
@@ -16,7 +17,8 @@ class System
         $this->id = $_id;
     }
 
-    public function GetName(): string {
+    public function GetName(): string
+    {
         return $this->name;
     }
 
@@ -25,4 +27,8 @@ class System
         $this->name = $_name;
     }
 
+    function CheckIntegrity(): bool
+    {
+        return true;
+    }
 }
