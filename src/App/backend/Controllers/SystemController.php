@@ -61,7 +61,6 @@ class SystemController
     function __destruct()
     {
         $this->dbController = null;
-        echo 'Destroying System Controller';
     }
 
 }
