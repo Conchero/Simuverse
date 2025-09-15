@@ -23,6 +23,8 @@ services:
       - ${POSTGRES_PORT}
     environment:
       POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_HOST: ${POSTGRES_HOST}
+      POSTGRES_NAME: ${POSTGRES_NAME}
       PGUSER: ${POSTGRES_USER}
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
     volumes:

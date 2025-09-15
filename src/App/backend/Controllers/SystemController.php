@@ -1,23 +1,21 @@
 <?php
 
 require_once('vendor/autoload.php');
+require_once($_SERVER["DOCUMENT_ROOT"]."/backend/Controllers/DatabaseController.php");
 
-//phpinfo();
 class SystemController
 {
 
-
-    function __construct() {}
+    protected $dbController;
+    function __construct() {
+        $this->dbController = new DatabaseController();
+    }
 
     function GetSystem(int $id = -1)
     {
         try {
-            $dsn = 'pgsql:dbname=universe;host=db;port=5432';
-            $user = 'postgres';
-            $password = 'simuversepassword';
-            $dbh = new PDO($dsn, $user, $password);
             $sql = 'SELECT * FROM star_system ';
-            $result = $dbh->prepare($sql);
+            $result = $this->dbController->GetDBH()->prepare($sql);
             $result->execute();
 
             return $result->fetchAll();
