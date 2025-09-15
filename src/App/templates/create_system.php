@@ -2,12 +2,12 @@
 if ($_POST) {
     require $_SERVER['DOCUMENT_ROOT'] . "/backend/Controllers/SystemController.php";
     $systemController = new SystemController();
-    $systemController->CreateSystem();
+    $systemController->CreateSystem($_POST['system_name']);
 
-    $host  = $_SERVER['HTTP_HOST'];
-    $uri   = rtrim(dirname($_SERVER['PHP_SELF']), '/\\');
-    $extra = 'system-collection';
-    header("Location: http://$host$uri/$extra");
+    // $host  = $_SERVER['HTTP_HOST'];
+    // $uri   = rtrim(dirname($_SERVER['PHP_SELF']), '/\\');
+    // $extra = 'system-collection';
+    // header("Location: http://$host$uri/$extra");
 }
 ?>
 

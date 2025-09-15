@@ -2,6 +2,8 @@
 
 require $_SERVER['DOCUMENT_ROOT'] . "/backend/Controllers/SystemController.php";
 
+$systemController = new SystemController();
+
 if ($_POST) {
     
     if (array_key_exists("delete", $_POST)) {
@@ -14,7 +16,6 @@ if ($_POST) {
     }
 }
 
-$systemController = new SystemController();
 $allSystems = $systemController->GetSystem();
 
 ?>

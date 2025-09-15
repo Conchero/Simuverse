@@ -1,11 +1,14 @@
 <?php
-require_once($_SERVER["DOCUMENT_ROOT"] . "/backend/Entities/BaseEntity");
+require_once($_SERVER["DOCUMENT_ROOT"] . "/backend/Entities/BaseEntity.php");
 
 class System extends BaseEntity
 {
     private int $id;
     private string $name;
 
+    function __construct(string $_name){
+        $this->name = $_name;
+    }
 
     public function GetId(): int
     {
