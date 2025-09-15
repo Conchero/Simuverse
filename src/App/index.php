@@ -15,7 +15,6 @@
 //     $grid[$i] = array( $iSubstract *$stepUnitPerAxis, $iSubstract * $stepUnitPerAxis);
 // }
 
-$path = $_SERVER['REQUEST_URI'];
  #Charge le router
  require_once './router.php';
 
