@@ -8,9 +8,14 @@ abstract class BaseController
 {
     protected ?DatabaseController $dbController;
 
-    function __construct()
+    function __construct(?DatabaseController $_dbContoller = null)
     {
-        $this->dbController = new DatabaseController();
+        if ($_dbContoller != null){
+            $this->dbController = $_dbContoller;
+        }
+        else{
+            $this->dbController = new DatabaseController();
+        }
     }
 
 

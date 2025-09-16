@@ -2,13 +2,14 @@
 
 require_once($_SERVER["DOCUMENT_ROOT"] . "/backend/Controllers/BaseController.php");
 require_once($_SERVER["DOCUMENT_ROOT"] . "/backend/Controllers/BodyController.php");
+require_once($_SERVER["DOCUMENT_ROOT"] . "/backend/Services/SystemManager.php");
 require_once($_SERVER["DOCUMENT_ROOT"] . "/backend/Entities/System.php");
 require_once($_SERVER["DOCUMENT_ROOT"] . "/backend/Entities/Body.php");
 
 class SystemController extends BaseController
 {
 
-    function __construct()
+    function __construct(?DatabaseController $_dbContoller = null)
     {
         parent::__construct();
     }
@@ -37,21 +38,16 @@ class SystemController extends BaseController
                     $result->bindParam(':name', $_name);
                     $result->execute();
 
-                    if (strtolower($_name) === 'solar') {
-                        $sql = 'SELECT id FROM star_system WHERE name=:name';
-                        $result = $this->dbController->GetDBH()->prepare($sql);
-                        $result->bindParam(':name', $_name);
-                        $result->execute();
-                        $system_id = $result->fetchAll()[0]["id"];
+                    $tmp_BodyParameters = array(
+                        "name" => "sun",
+                        "mass" => "1.9885_pow_30_units_kg",
+                        "rotationSpeed" => "1.997_units_kmpers",
+                        "radius" =>"4.379_pow_6_units_km",
+                        "distanceFromStar" =>"0_units_km",
+                        "systemId" => SystemManager::GetSystemId($this->dbController->GetDBH(),$_name)
+                    );
 
-                        echo "System ID " . $system_id;
-
-                        $bodyController = new BodyController();
-                        $sun = new Body("sun", "1.9885_pow_30_units_kg", "1.997_units_kmpers", "4.379_pow_6_units_km", "0_units_km", $system_id);
-                        $sun2 = new Body("sun2", "1.9885_pow_30_units_kg", "1.997_units_kmpers", "4.379_pow_6_units_km", "0_units_km", $system_id);
-                        $bodyController->CreateBody($sun->GetName(), $sun->GetMass(), $sun->GetRotationSpeed(), $sun->GetRadius(), $sun->GetDistanceFromPrimaryBody(), $system_id);
-                        $bodyController->CreateBody($sun2->GetName(), $sun2->GetMass(), $sun2->GetRotationSpeed(), $sun2->GetRadius(), $sun2->GetDistanceFromPrimaryBody(), $system_id);
-                    }
+                    SystemManager::CreateBodyWithinSystem($tmp_BodyParameters);
                 }
             } catch (PDOException $e) {
                 echo $e;
@@ -80,6 +76,7 @@ class SystemController extends BaseController
                 if (count($linkedBodyIdArray) > 0) {
                     $bodyController = new BodyController();
                     $bodyController->DeleteBody($linkedBodyIdArray);
+                    $bodyController = null;
                 }
 
                 $sql = 'DELETE FROM star_system WHERE id=:id';

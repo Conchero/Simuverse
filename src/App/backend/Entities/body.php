@@ -85,7 +85,7 @@ class Body extends BaseEntity
     }
 
 
-    public function GetSystem_Id(): int
+    public function GetSystemId(): int
     {
         return $this->system_id;
     }
