@@ -4,10 +4,10 @@ if ($_POST) {
     $systemController = new SystemController();
     $systemController->CreateSystem($_POST['system_name']);
 
-    // $host  = $_SERVER['HTTP_HOST'];
-    // $uri   = rtrim(dirname($_SERVER['PHP_SELF']), '/\\');
-    // $extra = 'system-collection';
-    // header("Location: http://$host$uri/$extra");
+    $host  = $_SERVER['HTTP_HOST'];
+    $uri   = rtrim(dirname($_SERVER['PHP_SELF']), '/\\');
+    $extra = 'system-collection';
+    header("Location: http://$host$uri/$extra");
 }
 ?>
 

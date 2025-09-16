@@ -5,7 +5,7 @@ $path = $_SERVER['REQUEST_URI'];
 $cleanPath = preg_replace('/\?.*/', '', $path);
 preg_match('#^/(\d+)/(\S+)/?$#', $cleanPath, $m);
 
-var_dump($m);
+$id = $m[1];
 
 include './templates/header.php';
 
@@ -19,8 +19,8 @@ switch ($cleanPath) {
     case '/system-collection':
         include './templates/system_management.php';
         break;
-        case '/'.$m[1].'/system-view':
-        include './templates/system_management.php';
+        case '/'.$id.'/system-view':
+        include './templates/system_view.php';
         break;
     default:
         echo 'Page introuvable - 505 ';

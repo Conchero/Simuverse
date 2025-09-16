@@ -14,7 +14,7 @@ class SystemController extends BaseController
         parent::__construct();
     }
 
-    function GetSystem(int $id = -1)
+    function GetAllSystem()
     {
         try {
             $sql = 'SELECT * FROM star_system ';
@@ -22,6 +22,21 @@ class SystemController extends BaseController
             $result->execute();
 
             return $result->fetchAll();
+        } catch (PDOException $e) {
+            echo $e;
+        }
+    }
+
+    function GetSystemWithLinkedBodies(int $id)
+    {
+        try {
+            $sql = 'SELECT b.*, st.name as system_name FROM star_system as st JOIN body as b ON st.id = b.system_id WHERE st.id = :id';
+            $result = $this->dbController->GetDBH()->prepare($sql);
+            $result->bindParam(":id", $id);
+            $result->execute();
+            $systemFetched = $result->fetchAll();
+            print_r($systemFetched);
+            return $systemFetched;
         } catch (PDOException $e) {
             echo $e;
         }
@@ -42,12 +57,20 @@ class SystemController extends BaseController
                         "name" => "sun",
                         "mass" => "1.9885_pow_30_units_kg",
                         "rotationSpeed" => "1.997_units_kmpers",
-                        "radius" =>"4.379_pow_6_units_km",
-                        "distanceFromStar" =>"0_units_km",
-                        "systemId" => SystemManager::GetSystemId($this->dbController->GetDBH(),$_name)
+                        "radius" => "4.379_pow_6_units_km",
+                        "distanceFromStar" => "0_units_km",
+                        "systemId" => SystemManager::GetSystemId($this->dbController->GetDBH(), $_name)
+                    );
+                    $tmp_Body2Parameters = array(
+                        "name" => "mercury",
+                        "mass" => "3.301_pow_23_units_kg",
+                        "rotationSpeed" => "10.83_units_kmperh",
+                        "radius" => "2439.7_units_km",
+                        "distanceFromStar" => "0.39_units_au",
+                        "systemId" => SystemManager::GetSystemId($this->dbController->GetDBH(), $_name)
                     );
 
-                    SystemManager::CreateBodyWithinSystem($tmp_BodyParameters);
+                    SystemManager::CreateBodyWithinSystem([$tmp_BodyParameters, $tmp_Body2Parameters]);
                 }
             } catch (PDOException $e) {
                 echo $e;

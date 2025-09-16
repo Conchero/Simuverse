@@ -38,22 +38,26 @@ class BodyController extends BaseController
             for ($i = 0; $i < count($_newBody); $i++) {
                 if ($_newBody[$i]->CheckIntegrity()) {
                     var_dump($_newBody[$i]);
-                    $valuesForSQL .=  "VALUES(DEFAULT,:name_{$i},:mass_{$i},:rotationSpeed_{$i},:radius_{$i},:distance_from_star_{$i}, :system_id_{$i})";
+                    echo "\n";
+                    $valuesForSQL .=  "(DEFAULT,:name_{$i},:mass_{$i},:rotationSpeed_{$i},:radius_{$i},:distance_from_star_{$i}, :system_id_{$i})";
                     if ($i < count($_newBody) - 1)
-                        $valuesForSQL .= ",";
+                        $valuesForSQL .= ", ";
                 }
             }
 
+
             if ($valuesForSQL != '') {
-                $sql = "INSERT INTO body {$valuesForSQL}";
+                $sql = "INSERT INTO body VALUES {$valuesForSQL}";
+                echo $sql . "\n";
+
                 $result = $this->dbController->GetDBH()->prepare($sql);
                 for ($i = 0; $i < count($_newBody); $i++) {
-                    $result->bindParam(":name_{$i}",$_newBody[$i]->GetName(), PDO::PARAM_STR);
-                    $result->bindParam(":mass_{$i}",$_newBody[$i]->GetMass(), PDO::PARAM_STR);
-                    $result->bindParam(":rotationSpeed_{$i}",$_newBody[$i]->GetRotationSpeed(), PDO::PARAM_STR);
-                    $result->bindParam(":radius_{$i}",$_newBody[$i]->GetRadius(), PDO::PARAM_STR);
-                    $result->bindParam(":distance_from_star_{$i}", $_newBody[$i]->GetDistanceFromPrimaryObject(), PDO::PARAM_STR);
-                    $result->bindParam(":system_id_{$i}",$_newBody[$i]->GetSystemId(), PDO::PARAM_STR);
+                    $result->bindParam(":name_{$i}", $_newBody[$i]->GetName(), PDO::PARAM_STR);
+                    $result->bindParam(":mass_{$i}", $_newBody[$i]->GetMass(), PDO::PARAM_STR);
+                    $result->bindParam(":rotationSpeed_{$i}", $_newBody[$i]->GetRotationSpeed(), PDO::PARAM_STR);
+                    $result->bindParam(":radius_{$i}", $_newBody[$i]->GetRadius(), PDO::PARAM_STR);
+                    $result->bindParam(":distance_from_star_{$i}", $_newBody[$i]->GetDistanceFromPrimaryBody(), PDO::PARAM_STR);
+                    $result->bindParam(":system_id_{$i}", $_newBody[$i]->GetSystemId(), PDO::PARAM_STR);
                 }
                 $result->execute();
             }

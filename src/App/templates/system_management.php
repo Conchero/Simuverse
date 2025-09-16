@@ -16,7 +16,7 @@ if ($_POST) {
     }
 }
 
-$allSystems = $systemController->GetSystem();
+$allSystems = $systemController->GetAllSystem();
 
 ?>
 
@@ -37,7 +37,7 @@ $allSystems = $systemController->GetSystem();
 
     <?php for ($i = 0; $i < count($allSystems); $i++): ?>
         <div>
-            <h1><?= $allSystems[$i]["name"] ?></h1>
+            <a href="<?= $allSystems[$i]["id"]?>/system-view"><h1><?= $allSystems[$i]["name"] ?></h1></a>
             <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post">
                 <input name="system-id" type="hidden" value=<?= $allSystems[$i]['id'] ?>></input>
                 <input type="submit" name='delete' value="Delete System"></input>

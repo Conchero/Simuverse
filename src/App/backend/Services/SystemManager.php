@@ -8,13 +8,23 @@ class SystemManager
     public static function CreateBodyWithinSystem(array $_bodyParameters)
     {
         $bodyController = new BodyController();
+        $bodyArray = array();
 
-        
+        for ($i = 0; $i < count($_bodyParameters); $i++) {
+            $newBody = new Body(
+                $_bodyParameters[$i]["name"],
+                $_bodyParameters[$i]["mass"],
+                $_bodyParameters[$i]["rotationSpeed"],
+                $_bodyParameters[$i]["radius"],
+                $_bodyParameters[$i]["distanceFromStar"],
+                $_bodyParameters[$i]["systemId"]
+            );
 
-        $newBody = new Body($_bodyParameters["name"], $_bodyParameters["mass"], $_bodyParameters["rotationSpeed"], $_bodyParameters["radius"], $_bodyParameters["distanceFromStar"], $_bodyParameters["systemId"]);
-        
-        $bodyController->PushBody([$newBody]);
-        
+            array_push($bodyArray, $newBody);
+        }
+
+        $bodyController->PushBody($bodyArray);
+
         //$sun2 = new Body("sun2", "1.9885_pow_30_units_kg", "1.997_units_kmpers", "4.379_pow_6_units_km", "0_units_km", $system_id);
     }
 
