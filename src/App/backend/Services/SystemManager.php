@@ -29,6 +29,7 @@ class SystemManager
     }
 
 
+
     public static function GetSystemId(PDO $_dbh, string $_systemName): int
     {
         $sql = 'SELECT id FROM star_system WHERE name=:name';

@@ -18,7 +18,7 @@ If object 1 is far away the barycenter can be located outside of the massive obj
 then if object1 get heavier and heavier the barycenter will be more and more located between them
 
 
-![barycenter example](./images/orbit_example.png.png)
+![barycenter example](./images/orbit_example.png)
 
 ---
 
